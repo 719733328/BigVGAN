@@ -23,6 +23,7 @@
     "discriminator_channel_mult": 1,
 
     "segment_size": 8192,
+    "spk_dim": 256,
     "num_mels": 100,
     "num_freq": 1025,
     "n_fft": 1024,

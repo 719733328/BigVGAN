@@ -1,7 +1,7 @@
 {
     "resblock": "1",
     "num_gpus": 0,
-    "batch_size": 32,
+    "batch_size": 6,
     "learning_rate": 0.0001,
     "adam_b1": 0.8,
     "adam_b2": 0.99,
@@ -23,6 +23,7 @@
     "discriminator_channel_mult": 1,
 
     "segment_size": 8192,
+    "spk_dim": 256,
     "num_mels": 80,
     "num_freq": 1025,
     "n_fft": 1024,

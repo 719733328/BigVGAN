@@ -121,6 +121,46 @@ class AMPBlock2(torch.nn.Module):
             remove_weight_norm(l)
 
 
+class SpeakerAdapter(nn.Module):
+    def __init__(self,
+                 speaker_dim,
+                 adapter_dim,
+                 epsilon=1e-5
+                 ):
+        super(SpeakerAdapter, self).__init__()
+        self.speaker_dim = speaker_dim
+        self.adapter_dim = adapter_dim
+        self.epsilon = epsilon
+        self.W_scale = nn.Linear(self.speaker_dim, self.adapter_dim)
+        self.W_bias = nn.Linear(self.speaker_dim, self.adapter_dim)
+        self.reset_parameters()
+
+    def reset_parameters(self):
+        torch.nn.init.constant_(self.W_scale.weight, 0.0)
+        torch.nn.init.constant_(self.W_scale.bias, 1.0)
+        torch.nn.init.constant_(self.W_bias.weight, 0.0)
+        torch.nn.init.constant_(self.W_bias.bias, 0.0)
+
+    def init_parameters(self):
+        torch.nn.init.constant_(self.W_scale.weight, 1.0)
+        torch.nn.init.constant_(self.W_scale.bias, 0.0)
+        torch.nn.init.constant_(self.W_bias.weight, 1.0)
+        torch.nn.init.constant_(self.W_bias.bias, 0.0)
+
+    def forward(self, x, speaker_embedding):
+        x = x.transpose(1, -1)
+        mean = x.mean(dim=-1, keepdim=True)
+        var = ((x - mean) ** 2).mean(dim=-1, keepdim=True)
+        std = (var + self.epsilon).sqrt()
+        y = (x - mean) / std
+        scale = self.W_scale(speaker_embedding)
+        bias = self.W_bias(speaker_embedding)
+        y *= scale.unsqueeze(1)
+        y += bias.unsqueeze(1)
+        y = y.transpose(1, -1)
+        return y
+
+
 class BigVGAN(torch.nn.Module):
     # this is our main BigVGAN model. Applies anti-aliased periodic activation for resblocks.
     def __init__(self, h):
@@ -129,6 +169,8 @@ class BigVGAN(torch.nn.Module):
 
         self.num_kernels = len(h.resblock_kernel_sizes)
         self.num_upsamples = len(h.upsample_rates)
+
+        self.adapter = SpeakerAdapter(h.spk_dim, h.num_mels)
 
         # pre conv
         self.conv_pre = weight_norm(Conv1d(h.num_mels, h.upsample_initial_channel, 7, 1, padding=3))
@@ -168,8 +210,11 @@ class BigVGAN(torch.nn.Module):
         for i in range(len(self.ups)):
             self.ups[i].apply(init_weights)
         self.conv_post.apply(init_weights)
+        self.adapter.init_parameters()
 
-    def forward(self, x):
+    def forward(self, x, spk=None):
+        if spk is not None:
+            x = self.adapter(x, spk)
         # pre conv
         x = self.conv_pre(x)
 

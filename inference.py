@@ -28,7 +28,7 @@ def load_checkpoint(filepath, device):
 
 
 def get_mel(x):
-    return mel_spectrogram(x, h.n_fft, h.num_mels, h.sampling_rate, h.hop_size, h.win_size, h.fmin, h.fmax)
+    return mel_spectrogram(y=x, n_fft=h.n_fft, num_mels=h.num_mels, sampling_rate=h.sampling_rate, hop_size=h.hop_size, win_size=h.win_size, fmin=h.fmin, fmax=h.fmax)
 
 
 def scan_checkpoint(cp_dir, prefix):
@@ -43,7 +43,7 @@ def inference(a, h):
     generator = Generator(h).to(device)
 
     state_dict_g = load_checkpoint(a.checkpoint_file, device)
-    generator.load_state_dict(state_dict_g['generator'])
+    generator.load_state_dict(state_dict_g['generator'], strict=False)
 
     filelist = os.listdir(a.input_wavs_dir)
 
@@ -53,8 +53,10 @@ def inference(a, h):
     generator.remove_weight_norm()
     with torch.no_grad():
         for i, filname in enumerate(filelist):
+            if not filname.endswith('.wav'):
+                continue
             # load the ground truth audio and resample if necessary
-            wav, sr = librosa.load(os.path.join(a.input_wavs_dir, filname), h.sampling_rate, mono=True)
+            wav, sr = librosa.load(os.path.join(a.input_wavs_dir, filname), sr=h.sampling_rate, mono=True)
             wav = torch.FloatTensor(wav).to(device)
             # compute mel spectrogram from the ground truth audio
             x = get_mel(wav.unsqueeze(0))

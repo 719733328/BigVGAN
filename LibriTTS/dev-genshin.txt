@@ -1,0 +1,13 @@
+wavs-22khz/zh-cn/提纳里/vo_XMAQ004_8_tighnari_12.wav|让我想想…我在须弥城待的时间不长，认识的也大多是做研究的人。|提纳里|zh-cn|./spk_ave/zh-cn/提纳里.spk.npy
+wavs-22khz/zh-cn/派蒙/vo_WYLQ001_1_paimon_05a.wav|#{PLAYERAVATAR#SEXPRO[INFO_MALE_PRONOUN_SHE INFO_FEMALE_PRONOUN_HE]}说了，要我们「抵达旅途的终点」，一定还是想和我们好好谈谈的。|派蒙|zh-cn|./spk_ave/zh-cn/派蒙.spk.npy
+wavs-22khz/zh-cn/莱依拉/vo_LYLCOP001_1916102_layla_02.wav|好想把论文完全抛到脑后！——开玩笑的，估计只能暂时忘掉这么沉重的事。|莱依拉|zh-cn|./spk_ave/zh-cn/莱依拉.spk.npy
+wavs-22khz/zh-cn/夜兰/vo_CYAQ005_3_yelan_10.wav|这个空间，已经不单单是空间了。不知是受何种高等力量影响…它一直在读取我们，再用幻象回应我们。|夜兰|zh-cn|./spk_ave/zh-cn/夜兰.spk.npy
+wavs-22khz/zh-cn/迪希雅/vo_XMAQ302_13_dehya_01.wav|如何啊？各自的事办得还顺利吗？|迪希雅|zh-cn|./spk_ave/zh-cn/迪希雅.spk.npy
+wavs-22khz/zh-cn/重云/vo_CYCOP001_1902403_chongyun_04.wav|没错，就是这种感觉。明显能感觉到体内的力量，安静了下来。|重云|zh-cn|./spk_ave/zh-cn/重云.spk.npy
+wavs-22khz/zh-cn/派蒙/vo_EQYX005_18_paimon_03.wav|阿祇，你真的是龙蜥吗？|派蒙|zh-cn|./spk_ave/zh-cn/派蒙.spk.npy
+wavs-22khz/zh-cn/派蒙/vo_CYAQ003_4_paimon_02.wav|噗…|派蒙|zh-cn|./spk_ave/zh-cn/派蒙.spk.npy
+wavs-22khz/zh-cn/香菱/vo_EQZYJ002_3_xiangling_04.wav|这样啊，那你来试就好了嘛。派蒙真是的，就爱凑热闹。|香菱|zh-cn|./spk_ave/zh-cn/香菱.spk.npy
+wavs-22khz/zh-cn/派蒙/vo_YDLQ002_5_paimon_03.wav|口气这么大，明明是我们占优势啊…|派蒙|zh-cn|./spk_ave/zh-cn/派蒙.spk.npy
+wavs-22khz/zh-cn/纳西妲/vo_XMAQ304_10_nahida_17.wav|怎么能…就这样忘记你…|纳西妲|zh-cn|./spk_ave/zh-cn/纳西妲.spk.npy
+wavs-22khz/zh-cn/留云借风真君/vo_EQHDJ102_6_cloudRetainer_09.wav|那两个老家伙…哼。|留云借风真君|zh-cn|./spk_ave/zh-cn/留云借风真君.spk.npy
+wavs-22khz/zh-cn/魈/vo_EQHDJ003_7_xiao_01.wav|还有何事？|魈|zh-cn|./spk_ave/zh-cn/魈.spk.npy

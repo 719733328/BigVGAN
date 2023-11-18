@@ -1,0 +1,15 @@
+wavs-22khz/zh-cn/刻晴/vo_EQHDJ102_8_keqing_04.wav|二…咳！三位先忙，我们不多叨扰了。|刻晴|zh-cn|./spk_ave/zh-cn/刻晴.spk.npy
+wavs-22khz/zh-cn/迪奥娜/vo_dialog_DPEQ004_diona_05.wav|是「酒」不好！不许为它辩护。|迪奥娜|zh-cn|./spk_ave/zh-cn/迪奥娜.spk.npy
+wavs-22khz/zh-cn/派蒙/vo_XMAQ009_6_paimon_05.wav|你在说什么呀，迪娜泽黛，我好像有点听不懂…但总感觉现在的你很悲观…|派蒙|zh-cn|./spk_ave/zh-cn/派蒙.spk.npy
+wavs-22khz/zh-cn/派蒙/vo_JNJEQ002_2_paimon_25.wav|不过反过来想，有班尼特在的话，可莉也不会闯出什么祸…这么一来，就可以开开心心地度过佳酿节了！|派蒙|zh-cn|./spk_ave/zh-cn/派蒙.spk.npy
+wavs-22khz/zh-cn/「大肉丸」/vo_CLWQ001_5_bigMeatMaru_18.wav|哈哈哈，派蒙还真是有趣呀，虽然说得不对，不过也差不多！|「大肉丸」|zh-cn|./spk_ave/zh-cn/「大肉丸」.spk.npy
+wavs-22khz/zh-cn/派蒙/vo_CYAQ001_1_paimon_10.wav|不要太天真哦！这个社会可是很复杂的，先做好最坏打算，万一真有什么事，我们就成她的共犯了！|派蒙|zh-cn|./spk_ave/zh-cn/派蒙.spk.npy
+wavs-22khz/zh-cn/派蒙/vo_TNLLQ003_11_paimon_03.wav|卡卡塔？卡卡塔？|派蒙|zh-cn|./spk_ave/zh-cn/派蒙.spk.npy
+wavs-22khz/zh-cn/烟绯/vo_CYAQ003_3_yanfei_05.wav|咦？突然消失了…|烟绯|zh-cn|./spk_ave/zh-cn/烟绯.spk.npy
+wavs-22khz/zh-cn/爱贝尔/vo_tips_aeval_tourboat_clementine_D-3_02.wav|根据沫芒宫的公开报道，「律偿混能」的生产原理好像就和审判有关。|爱贝尔|zh-cn|./spk_ave/zh-cn/爱贝尔.spk.npy
+wavs-22khz/zh-cn/琴/vo_EQYQ002_7_qin_07.wav|确实有东西出现了。各位，可以靠近查看，但请务必保持警戒。|琴|zh-cn|./spk_ave/zh-cn/琴.spk.npy
+wavs-22khz/zh-cn/多莉/vo_XMAQ007_7_dori_08.wav|而关于情报的真假，就更不用担心了，我用留影机拍下了交易瞬间的画片，无论谁看了都赖不了账。|多莉|zh-cn|./spk_ave/zh-cn/多莉.spk.npy
+wavs-22khz/zh-cn/林尼/vo_LNLQ001_3_lyney_30.wav|这个嘛…保密。|林尼|zh-cn|./spk_ave/zh-cn/林尼.spk.npy
+wavs-22khz/zh-cn/流浪者/vo_wanderer_mimitomo_friendship1_02.wav|你才是这里的主人吧，紧张什么呢，不像样。|流浪者|zh-cn|./spk_ave/zh-cn/流浪者.spk.npy
+wavs-22khz/zh-cn/迪奥娜/vo_tips_TCG002_9_diona_91.wav|在每个结束阶段中，你都可以从行动牌堆中<color=#c76a24ff>抓2张牌</color>！|迪奥娜|zh-cn|./spk_ave/zh-cn/迪奥娜.spk.npy
+wavs-22khz/zh-cn/夏洛蒂/vo_dialog_DPEQ001_charlotte_05.wav|嗯，要不，还是用回第一版？…|夏洛蒂|zh-cn|./spk_ave/zh-cn/夏洛蒂.spk.npy

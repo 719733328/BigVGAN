@@ -63,6 +63,7 @@ def train(rank, a, h):
     if os.path.isdir(a.checkpoint_path):
         cp_g = scan_checkpoint(a.checkpoint_path, 'g_')
         cp_do = scan_checkpoint(a.checkpoint_path, 'do_')
+        print("Found checkpoint2 : ", a.checkpoint_path, cp_g, cp_do)
 
     # load the latest checkpoint if exists
     steps = 0
@@ -70,9 +71,10 @@ def train(rank, a, h):
         state_dict_do = None
         last_epoch = -1
     else:
+        print("Found checkpoint at {}".format(cp_do))
         state_dict_g = load_checkpoint(cp_g, device)
         state_dict_do = load_checkpoint(cp_do, device)
-        generator.load_state_dict(state_dict_g['generator'])
+        generator.load_state_dict(state_dict_g['generator'], strict=False)
         mpd.load_state_dict(state_dict_do['mpd'])
         mrd.load_state_dict(state_dict_do['mrd'])
         steps = state_dict_do['steps'] + 1
@@ -89,11 +91,13 @@ def train(rank, a, h):
                                 h.learning_rate, betas=[h.adam_b1, h.adam_b2])
 
     if state_dict_do is not None:
-        optim_g.load_state_dict(state_dict_do['optim_g'])
+        print("Loading optimizers...")
+        print(state_dict_do.keys())
+        # optim_g.load_state_dict(state_dict_do['optim_g'])
         optim_d.load_state_dict(state_dict_do['optim_d'])
 
-    scheduler_g = torch.optim.lr_scheduler.ExponentialLR(optim_g, gamma=h.lr_decay, last_epoch=last_epoch)
-    scheduler_d = torch.optim.lr_scheduler.ExponentialLR(optim_d, gamma=h.lr_decay, last_epoch=last_epoch)
+    scheduler_g = torch.optim.lr_scheduler.ExponentialLR(optim_g, gamma=h.lr_decay, last_epoch=-1)
+    scheduler_d = torch.optim.lr_scheduler.ExponentialLR(optim_d, gamma=h.lr_decay, last_epoch=-1)
 
     # define training and validation datasets
     # unseen_validation_filelist will contain sample filepaths outside the seen training & validation dataset
@@ -169,12 +173,13 @@ def train(rank, a, h):
 
             # loop over validation set and compute metrics
             for j, batch in tqdm(enumerate(loader)):
-                x, y, _, y_mel = batch
+                x, y, _, y_mel, spk = batch
                 y = y.to(device)
+                spk = spk.to(device)
                 if hasattr(generator, 'module'):
-                    y_g_hat = generator.module(x.to(device))
+                    y_g_hat = generator.module(x.to(device), spk=spk)
                 else:
-                    y_g_hat = generator(x.to(device))
+                    y_g_hat = generator(x.to(device), spk=spk)
                 y_mel = y_mel.to(device, non_blocking=True)
                 y_g_hat_mel = mel_spectrogram(y_g_hat.squeeze(1), h.n_fft, h.num_mels, h.sampling_rate,
                                               h.hop_size, h.win_size,
@@ -191,7 +196,7 @@ def train(rank, a, h):
                     val_pesq_tot += pesq(16000, y_int_16k, y_g_hat_int_16k, 'wb')
 
                 # MRSTFT calculation
-                val_mrstft_tot += loss_mrstft(y_g_hat.squeeze(1), y).item()
+                val_mrstft_tot += loss_mrstft(y_g_hat, y).item()
 
                 # log audio and figures to Tensorboard
                 if j % a.eval_subsample == 0:  # subsample every nth from validation set
@@ -253,14 +258,15 @@ def train(rank, a, h):
         for i, batch in enumerate(train_loader):
             if rank == 0:
                 start_b = time.time()
-            x, y, _, y_mel = batch
+            x, y, _, y_mel, spk = batch
 
             x = x.to(device, non_blocking=True)
+            spk = spk.to(device, non_blocking=True)
             y = y.to(device, non_blocking=True)
             y_mel = y_mel.to(device, non_blocking=True)
             y = y.unsqueeze(1)
 
-            y_g_hat = generator(x)
+            y_g_hat = generator(x, spk=spk)
             y_g_hat_mel = mel_spectrogram(y_g_hat.squeeze(1), h.n_fft, h.num_mels, h.sampling_rate, h.hop_size, h.win_size,
                                           h.fmin, h.fmax_for_loss)
 
@@ -383,13 +389,13 @@ def main():
 
     parser.add_argument('--group_name', default=None)
 
-    parser.add_argument('--input_wavs_dir', default='LibriTTS')
+    parser.add_argument('--input_wavs_dir', default='data')
     parser.add_argument('--input_mels_dir', default='ft_dataset')
-    parser.add_argument('--input_training_file', default='LibriTTS/train-full.txt')
-    parser.add_argument('--input_validation_file', default='LibriTTS/val-full.txt')
+    parser.add_argument('--input_training_file', default='LibriTTS/train-genshin.txt')
+    parser.add_argument('--input_validation_file', default='LibriTTS/val-genshin.txt')
 
-    parser.add_argument('--list_input_unseen_wavs_dir', nargs='+', default=['LibriTTS', 'LibriTTS'])
-    parser.add_argument('--list_input_unseen_validation_file', nargs='+', default=['LibriTTS/dev-clean.txt', 'LibriTTS/dev-other.txt'])
+    parser.add_argument('--list_input_unseen_wavs_dir', nargs='+', default=['data'])
+    parser.add_argument('--list_input_unseen_validation_file', nargs='+', default=['LibriTTS/dev-genshin.txt'])
 
     parser.add_argument('--checkpoint_path', default='exp/bigvgan')
     parser.add_argument('--config', default='')
